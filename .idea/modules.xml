@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/imagelink.iml" filepath="$PROJECT_DIR$/imagelink.iml" />
+      <module fileurl="file://D:/webmagic-master/webmagic-core/webmagic-core.iml" filepath="D:/webmagic-master/webmagic-core/webmagic-core.iml" />
     </modules>
   </component>
 </project>
