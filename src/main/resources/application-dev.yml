@@ -11,7 +11,8 @@ spring:
 mybatis:
   mapper-locations: classpath*:com/tony/imagelink/mapper/*.xml
   type-aliases-package: com.tony.imagelink.mapper.entity.*
-  config-location: classpath*:mybatis-config.xml
-
+  config-location: classpath:mybatis-config.xml
+jpa:
+  show-sql: true //数据库语句打印出来
 logging:
   config: classpath:logback-spring.xml

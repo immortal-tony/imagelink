@@ -82,7 +82,6 @@ public class HttpUtils {
         return "";
     }
 
-
     /**
      * 下载图片
      * @param url

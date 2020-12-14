@@ -14,7 +14,7 @@ class HttpUtilsTest {
         System.out.println(UUID.randomUUID().toString());
         System.out.println(System.currentTimeMillis());
         System.out.println(System.currentTimeMillis());
-        System.out.println(DateUtil.formatDate(new Date(), "yyyyMMddHHmmss"));
+//        System.out.println(DateUtil.formatDate(new Date(), "yyyyMMddHHmmss"));
     }
 
     @Test
