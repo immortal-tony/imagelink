@@ -4,6 +4,7 @@ import com.tony.imagelink.mapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @ClassName SpringListener
@@ -11,6 +12,7 @@ import org.springframework.context.ApplicationListener;
  * @Author hzf
  * @Date 2020/12/14 10:17
  */
+@Component
 public class SpringListener implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
