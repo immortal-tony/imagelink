@@ -38,14 +38,13 @@ public class JobLink implements PageProcessor, Runnable {
 
     public volatile AtomicInteger count = new AtomicInteger(0);
 
-
     //下载的指定图集地址
     public static final String PIC_MAIN = "https://www.nvshens.org/tag/new/";
 
     public static final String PIC_COLL = "https://www\\.nvshens\\.org/tag/new/";
-    public static final String PIC_COLLECTION = "https://www\\.nvshens\\.org/tag/new/\\d*";
+    public static final String PIC_COLLECTION = "https://www\\.nvshens\\.org/tag/new/\\d+";
 
-    public static final String Model_collection = "https://www.nvshens.org/girl/\\d*";
+    public static final String Model_collection = "https://www.nvshens.org/girl/\\d+";
 
     public static final String Model_PIC = "https://www.nvshens.org/g/\\d*";
 
@@ -60,6 +59,7 @@ public class JobLink implements PageProcessor, Runnable {
         Model model;
         String url = "";
         try {
+            System.out.println("运行显示！");
             if (page.getUrl().regex(PIC_COLL).match()) {
                 // 模特集合页面
                 page.addTargetRequests(page.getHtml().xpath("//*[@id=\"listdiv\"]").links().regex(PIC_COLLECTION).all());
@@ -155,5 +155,4 @@ public class JobLink implements PageProcessor, Runnable {
             .setDomain("nvshens.org")
             .setUserAgent(
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
-
 }

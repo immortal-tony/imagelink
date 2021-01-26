@@ -21,6 +21,7 @@ public class SpringListener implements ApplicationListener<ApplicationReadyEvent
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         // 启动爬虫
+        System.out.println("启动爬虫线程任务");
         jobLink.run();
     }
 }
