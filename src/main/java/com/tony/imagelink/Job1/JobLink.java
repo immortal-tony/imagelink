@@ -7,7 +7,10 @@ import com.tony.imagelink.mapper.entity.Model;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -16,6 +19,7 @@ import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
+import java.beans.beancontext.BeanContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,13 +31,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Date 2020/12/13 11:32
  */
 @Service
-public class JobLink implements PageProcessor, Runnable {
+public class JobLink implements PageProcessor, ApplicationContextAware, Runnable {
     private static Logger log = LoggerFactory.getLogger(JobLink.class);
 
-    @Autowired
+    private static ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        JobLink.applicationContext = applicationContext;
+    }
+
+    public static <T> T getBean(Class<T> clz) throws BeansException {
+        return (T) applicationContext.getBean(clz);
+    }
+
     private ModelMapper modelMapper;
 
-    @Autowired
     private GalleryFeaturesMapper galleryFeaturesMapper;
 
     public volatile AtomicInteger count = new AtomicInteger(0);
@@ -59,7 +72,6 @@ public class JobLink implements PageProcessor, Runnable {
         Model model;
         String url = "";
         try {
-            System.out.println("运行显示！");
             if (page.getUrl().regex(PIC_COLL).match()) {
                 // 模特集合页面
                 page.addTargetRequests(page.getHtml().xpath("//*[@id=\"listdiv\"]").links().regex(PIC_COLLECTION).all());
@@ -72,8 +84,8 @@ public class JobLink implements PageProcessor, Runnable {
                     model.setName(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[1]/h1/text()").toString());//模特名
                     model.setUrl(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[3]/a/img/@src").toString());//模特图片
                     model.setAge(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[1]/td[2]/text()").toString());
-                    model.setBeatyTag(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[6]/td[2]/text()").toString());
-                    model.setBirtAddress(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[5]/td[2]/text()").toString());
+                    model.setBirtAddress(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[6]/td[2]/text()").toString());
+                    model.setBeatyTag(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[5]/td[2]/text()").toString());
                     model.setBirth(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[2]/td[2]/text()").toString());
                     model.setConstellation(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[3]/td[2]/text()").toString());
                     model.setStature(Integer.valueOf(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[4]/td[2]/text()").toString()));
@@ -90,8 +102,8 @@ public class JobLink implements PageProcessor, Runnable {
                     }
                     log.info("模特信息 <{}>", model.toString());
                     // 数据库插入模特信息
+                    modelMapper = getBean(ModelMapper.class);
                     modelMapper.insert(model);
-
                 }
             } else if (page.getUrl().regex(Model_PIC).match()) {
                 // 模特图片详情页面
@@ -118,6 +130,7 @@ public class JobLink implements PageProcessor, Runnable {
                         log.info("模特的图片链接信息 <{}>", galleryFeatures.toString());
 
                         // 模特一张一张图片数据插入数据库
+                        galleryFeaturesMapper = getBean(GalleryFeaturesMapper.class);
                         int ret = galleryFeaturesMapper.insert(galleryFeatures);
                         if(1 == ret){
                             count.incrementAndGet();
@@ -134,8 +147,8 @@ public class JobLink implements PageProcessor, Runnable {
             log.error("出现错误 error <{}> ", e.getMessage());
         }
     }
-
     //主函数执行爬虫
+    @Override
     public void run() {
         Spider.create(new JobLink())
                 .addUrl(PIC_MAIN)   //设置爬去数据的页面
@@ -143,7 +156,6 @@ public class JobLink implements PageProcessor, Runnable {
                 .thread(10)     //设置线程个数来执行程序
                 .run();     //执行爬虫
     }
-
     @Override
     public Site getSite() {
         return site;

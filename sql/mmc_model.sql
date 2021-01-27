@@ -1,6 +1,6 @@
 CREATE TABLE `mmc_model`
 (
-    `id`            int(12) NOT NULL COMMENT '模特的id编号',
+    `id`            int(12) NOT NULL AUTO_INCREMENT COMMENT '模特的id编号',
     `name`          varchar(12)  DEFAULT NULL COMMENT '模特姓名',
     `age`           varchar(12)  DEFAULT NULL COMMENT '模特年龄',
     `birth`         varchar(36)  DEFAULT NULL COMMENT '模特生日',
@@ -13,4 +13,5 @@ CREATE TABLE `mmc_model`
     `comment`       varchar(200) DEFAULT NULL COMMENT '模特评论',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
   DEFAULT CHARSET = utf8

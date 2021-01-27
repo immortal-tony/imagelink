@@ -1,6 +1,6 @@
 CREATE TABLE `mmc_gallery_features`
 (
-    `id`       int(12) NOT NULL COMMENT '模特的图片id',
+    `id`       int(12) NOT NULL AUTO_INCREMENT COMMENT '模特的图片id',
     `title`    varchar(64)  DEFAULT NULL COMMENT '标题',
     `feature`  varchar(64)  DEFAULT NULL COMMENT '分类标签',
     `pic_num`  varchar(64)  DEFAULT NULL COMMENT '图片数量',

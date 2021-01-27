@@ -10,7 +10,6 @@ import org.mybatis.spring.annotation.MapperScan;
  * @Author hzf
  * @Date 2020/12/13 17:50
  */
-@Mapper
 public interface GalleryFeaturesMapper {
 
     int insert(GalleryFeatures galleryFeatures);

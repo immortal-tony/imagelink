@@ -1,6 +1,8 @@
 package com.tony.imagelink.Job1;
 
+import com.tony.imagelink.mapper.GalleryFeaturesMapper;
 import com.tony.imagelink.mapper.ModelMapper;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
