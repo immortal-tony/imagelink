@@ -5,11 +5,13 @@
     <insert id="insert" parameterType="com.tony.imagelink.mapper.entity.Model"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into mmc_model
-        (id, name, age, birth, constellation, stature, birtAddress, url, beatyTag, collectionId, comment)
+        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, beatyTag, collectionId, comment)
         values (#{id,jdbcType=DECIMAL},
                 #{name,jdbcType=VARCHAR},
                 #{age,jdbcType=VARCHAR},
+        #{modelId,jdbcType=DECIMAL},
                 #{birth,jdbcType=VARCHAR},
+        #{weight,jdbcType=VARCHAR},
                 #{constellation,jdbcType=VARCHAR},
                 #{stature,jdbcType=DECIMAL},
                 #{birtAddress,jdbcType=VARCHAR},
@@ -18,4 +20,14 @@
                 #{collectionId,jdbcType=VARCHAR},
                 #{comment,jdbcType=VARCHAR})
     </insert>
+    <sql id="Base_clomuns">
+            modelId,collectionId,name,age,birth,weight,constellation,
+            stature,birtAddress,url,beatyTag,comment
+    </sql>
+    <select id="selectQueryModels" resultType="com.tony.imagelink.mapper.entity.Model">
+        select
+        <include refid="Base_clomuns"></include>
+        from mmc_model
+        group by modelId
+    </select>
 </mapper>

@@ -13,10 +13,11 @@ import java.util.List;
 @Data
 public class GalleryFeatures {
     private String title;
+    private int modelId;   //模特Id
+    private int collectionId;  //图片所在图集Id
     private String feature; //园园呀 秀人网 内衣 黑丝
     private String picNum;
     private String viewNum;
     private String url; // 图片地址
-    private int collectionId;
     private String comments;
 }

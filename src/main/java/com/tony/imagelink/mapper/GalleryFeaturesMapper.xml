@@ -5,12 +5,47 @@
     <insert id="insert" parameterType="com.tony.imagelink.mapper.entity.GalleryFeatures"
             useGeneratedKeys="true" keyProperty="collectionId" keyColumn="id">
         insert into mmc_gallery_features
-            (title, feature, pic_num, view_num, url, comments)
-        values (#{title,jdbcType=VARCHAR},
+        (model_id, collection_id, title, feature, pic_num, view_num, url, comments)
+        values (#{modelId,jdbcType=DECIMAL},
+                #{collectionId,jdbcType=DECIMAL},
+                    #{title,jdbcType=VARCHAR},
                 #{feature,jdbcType=VARCHAR},
                 #{picNum,jdbcType=VARCHAR},
                 #{viewNum,jdbcType=VARCHAR},
                 #{url,jdbcType=VARCHAR},
                 #{comments,jdbcType=VARCHAR})
     </insert>
+
+    <insert id="insertCollection">
+        insert into mmc_model_collection
+        (CollectionId, beatyName)
+        values
+        <foreach collection="featies" item="reddemCode" index="index" separator=",">
+            (
+            #{name,jdbcType=DECIMAL},
+            #{reddemCode,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <sql id="Base_Cloumn">
+        model_id modelId,collection_id collectionId,title,feature,pic_num picNum,view_num viewNum,url,comments
+    </sql>
+    <select id="selectQueryGalleryFeatures" resultType="com.tony.imagelink.mapper.entity.GalleryFeatures">
+        select
+        <include refid="Base_Cloumn"></include>
+        from
+        mmc_gallery_features
+        group by url
+    </select>
+    <sql id="Base_Column1">
+        CollectionId collectionId, beatyName modelFeature
+    </sql>
+    <select id="selectModelCollectionIds" resultType="com.tony.imagelink.mapper.entity.ModelCollection">
+        select
+        <include refid="Base_Column1"></include>
+        from mmc_model_collection
+        group by CollectionId,beatyName
+    </select>
+
 </mapper>
