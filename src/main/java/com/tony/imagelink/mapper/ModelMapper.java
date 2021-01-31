@@ -20,4 +20,10 @@ public interface ModelMapper{
      * @return
      */
     List<Model> selectQueryModels();
+
+
+    // 推荐模特专辑展示表
+    List<Model> slelctHotQueryModels();
+
+    List<Integer> checkModel(@Param("modelId") int modelId,@Param("collectionIds") String collectionIds);
 }

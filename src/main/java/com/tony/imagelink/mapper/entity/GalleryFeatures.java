@@ -18,6 +18,7 @@ public class GalleryFeatures {
     private String feature; //园园呀 秀人网 内衣 黑丝
     private String picNum;
     private String viewNum;
+    private String date;
     private String url; // 图片地址
     private String comments;
 }

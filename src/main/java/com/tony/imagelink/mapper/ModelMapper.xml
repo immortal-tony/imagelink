@@ -5,13 +5,14 @@
     <insert id="insert" parameterType="com.tony.imagelink.mapper.entity.Model"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into mmc_model
-        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, beatyTag, collectionId, comment)
+        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, beatyTag, collectionId,
+         comment)
         values (#{id,jdbcType=DECIMAL},
                 #{name,jdbcType=VARCHAR},
                 #{age,jdbcType=VARCHAR},
-        #{modelId,jdbcType=DECIMAL},
+                #{modelId,jdbcType=DECIMAL},
                 #{birth,jdbcType=VARCHAR},
-        #{weight,jdbcType=VARCHAR},
+                #{weight,jdbcType=VARCHAR},
                 #{constellation,jdbcType=VARCHAR},
                 #{stature,jdbcType=DECIMAL},
                 #{birtAddress,jdbcType=VARCHAR},
@@ -21,13 +22,35 @@
                 #{comment,jdbcType=VARCHAR})
     </insert>
     <sql id="Base_clomuns">
-            modelId,collectionId,name,age,birth,weight,constellation,
-            stature,birtAddress,url,beatyTag,comment
+        modelId, distinct collectionId as collectionId,name,age,birth,weight,constellation,
+        stature,birtAddress,url,beatyTag,comment<!--@sql from mmc_model -->
     </sql>
     <select id="selectQueryModels" resultType="com.tony.imagelink.mapper.entity.Model">
         select
         <include refid="Base_clomuns"></include>
         from mmc_model
         group by modelId
+    </select>
+    <sql id="Model_clomuns">
+        modelId modelid,collection_id,view_num,date
+    </sql>
+    <select id="slelctHotQueryModels" resultType="com.tony.imagelink.mapper.entity.Model">
+        select
+        <include refid="Base_clomuns"></include>
+        from mmc_model
+        left join
+        (select
+        <include refid="Model_clomuns"></include>
+        from mmc_hot_gallery_features
+        group by modelId,collection_id,view_num,date) a
+        on a.collection_id = collectionId
+        group by collectionId
+        order by date,view_num desc
+    </select>
+    <select id="checkModel" resultType="java.lang.Integer">
+        select
+        collectionId
+        from mmc_model
+        where modelId = #{modelId,jdbcType=DECIMAL} and collectionId in (#{collectionIds,jdbcType=VARCHAR})
     </select>
 </mapper>

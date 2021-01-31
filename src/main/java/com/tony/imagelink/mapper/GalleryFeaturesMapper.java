@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,4 +43,19 @@ public interface GalleryFeaturesMapper {
      * @return
      */
     List<ModelCollection> selectModelCollectionIds(@Param("feature") String feature);
+
+    List<GalleryFeatures> checkUrl(@Param("url") String url);
+
+    List<ModelCollection> checkModelAndCollection(@Param("collection_id") Integer collection_id,@Param("tag") String tag1);
+
+    int insertHotGalleryFeatures(GalleryFeatures galleryFeatures);
+
+    List<GalleryFeatures> checkHotUrl(String url);
+
+    // 最新的查询特辑链接
+    List<GalleryFeatures> selectLastQueryGalleryFeatures(@Param("collection_id") Integer collection_id);
+
+    // 最热的最新的专辑链接
+    List<GalleryFeatures> selectHotQueryGalleryFeatures(@Param("collection_id") Integer collection_id);
+
 }
