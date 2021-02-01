@@ -22,7 +22,8 @@ public class Model {
     private String constellation; // 星座
     private int stature;  // 身高
     private String birtAddress;  // 出生地
-    private String url; //封面图片地址
+    private String url; //专辑封面图片地址
+    private String coverUrl; //模特信息封面图片地址
     private String beatyTag;  // 美女分类
     private String comment; //评论
 }

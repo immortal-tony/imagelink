@@ -40,6 +40,8 @@ public class test1 {
         bb.removeAll(bb1);
         System.out.println(bb);
 
+        System.out.println(String.format("https://www.nvshens.org/g/%s/",String.valueOf(89934)));
+
     }
 
 }

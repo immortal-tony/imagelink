@@ -26,6 +26,7 @@ public class SpringListener implements ApplicationListener<ApplicationReadyEvent
         System.out.println("启动爬虫线程任务");
 //        Thread my = new Thread(jobLink, "我的线程");
 //        my.run();
+        // TODO
         jobLink.run();
     }
 }

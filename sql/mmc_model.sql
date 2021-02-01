@@ -11,7 +11,8 @@ CREATE TABLE `mmc_model`
     `constellation` varchar(256) DEFAULT NULL COMMENT '模特星座',
     `stature` int(4) DEFAULT NULL COMMENT '模特身高',
     `birtAddress` varchar(36) DEFAULT NULL COMMENT '模特出生地',
-    `url` varchar(200) DEFAULT NULL COMMENT '模特封面图片地址',
+    `url` varchar(200) DEFAULT NULL COMMENT '模特专辑封面图片地址',
+        `coverUrl` varchar(200) DEFAULT NULL COMMENT '模特信息封面图片地址',
     `beatyTag` varchar(256) DEFAULT NULL COMMENT '美女分类',
     `comment` text DEFAULT NULL COMMENT '模特评论',
     PRIMARY KEY (`id`)

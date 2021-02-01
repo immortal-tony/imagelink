@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,6 @@ import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
-import java.beans.beancontext.BeanContext;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -98,40 +95,42 @@ public class JobLink implements PageProcessor, ApplicationContextAware, Runnable
                     List<Integer> ecistsCollectionIds = modelMapper.checkModel(modelId, collectionIds);
                     if (!(ecistsCollectionIds.size() == collectionId.size())) {
                         collectionId.removeAll(ecistsCollectionIds);
-                        collectionIds = StringUtils.join(collectionId.toArray(), ", ");
-                        model = new Model();
-                        model.setModelId(modelId);
-                        model.setCollectionId(collectionIds);
-                        model.setName(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[1]/h1/text()").toString());//模特名
-                        model.setUrl(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[3]/a/img/@src").toString());//模特图片
-                        model.setAge(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[1]/td[2]/text()").toString());
-                        model.setBirth(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[2]/td[2]/text()").toString());
+                        for (Integer item1 : collectionId) {
+                            model = new Model();
+                            model.setModelId(modelId);
+                            model.setName(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[1]/h1/text()").toString());//模特名
+                        model.setCoverUrl(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[3]/a/img/@src").toString());//模特图片
+                            model.setAge(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[1]/td[2]/text()").toString());
+                            model.setBirth(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[2]/td[2]/text()").toString());
 //                    String statureStr = StringUtils.isNotBlank(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[4]/td[2]/text()").toString())?page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[4]/td[2]/text()").toString():"0";
 //                    model.setStature(Integer.valueOf(statureStr));
-                        model.setConstellation(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[3]/td[2]/text()").toString());
-                        model.setComment(page.getHtml().xpath("//*[@id=\"post\"]/div[5]/div/div[1]/div[2]/p/text()").toString());
-                        //这一块采用for循环.添加女的图集id字段，模特特点标签页。 TODO 存在空值匹配不上，错误匹配的事情
-                        info = new HashMap<>();
-                        for (Selectable item : page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr").nodes()) {
-                            // 引用对象放值放不进去
-                            String property = item.$("td").nodes().get(0).toString().split(">")[1].split("<")[0];
-                            String value = item.$("td").nodes().get(1).toString().split(">")[1].split("<")[0];
-                            info.put(property, value);
-                            // 这种取元素为null
+                            model.setConstellation(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[3]/td[2]/text()").toString());
+                            model.setComment(page.getHtml().xpath("//*[@id=\"post\"]/div[5]/div/div[1]/div[2]/p/text()").toString());
+                            //这一块采用for循环.添加女的图集id字段，模特特点标签页。 TODO 存在空值匹配不上，错误匹配的事情
+                            info = new HashMap<>();
+                            for (Selectable item : page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr").nodes()) {
+                                // 引用对象放值放不进去
+                                String property = item.$("td").nodes().get(0).toString().split(">")[1].split("<")[0];
+                                String value = item.$("td").nodes().get(1).toString().split(">")[1].split("<")[0];
+                                info.put(property, value);
+                                // 这种取元素为null
 //                        System.out.println(item.xpath("//tr/td[1]/text()").toString());
-                        }
-                        model.setAge(info.get("年 龄："));
-                        model.setBirth(info.get("生 日："));
-                        model.setBirtAddress(info.getOrDefault("出 生：", "0"));
-                        model.setBeatyTag(info.getOrDefault("三 围：", "无"));
-                        model.setWeight(info.getOrDefault("体 重：", "无"));
-                        model.setStature(Integer.parseInt(info.getOrDefault("身 高：", "0")));
-                        model.setConstellation(info.getOrDefault("星 座：", "无"));
+                            }
+                            model.setAge(info.get("年 龄："));
+                            model.setBirth(info.get("生 日："));
+                            model.setBirtAddress(info.getOrDefault("出 生：", "0"));
+                            model.setBeatyTag(info.getOrDefault("三 围：", "无"));
+                            model.setWeight(info.getOrDefault("体 重：", "无"));
+                            model.setStature(Integer.parseInt(info.getOrDefault("身 高：", "0")));
+                            model.setConstellation(info.getOrDefault("星 座：", "无"));
 //                    model.setBirtAddress(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[6]/td[2]/text()").toString());
 //                    model.setBeatyTag(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[5]/td[2]/text()").toString());
-                        log.info("模特信息 <{}>", model.toString());
-                        // 数据库插入模特信息
-                        modelMapper.insert(model);
+                            // 数据库插入模特信息 , item1 为
+                            model.setUrl(String.format("https://t1.onvshen.com:85/gallery/%s/%s/cover/0.jpg",model.getModelId(), String.valueOf(item1)));
+                            model.setCollectionId(String.valueOf(item1));
+                            log.info("模特信息 <{}>", model.toString());
+                            modelMapper.insert(model);
+                        }
                     }
                 }
             } else if (page.getUrl().regex(Model_PIC).match()) {
