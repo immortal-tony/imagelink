@@ -5,7 +5,7 @@
     <insert id="insert" parameterType="com.tony.imagelink.mapper.entity.Model"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into mmc_model
-        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, beatyTag, collectionId,
+        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, coverUrl, beatyTag, collectionId,
          comment)
         values (#{id,jdbcType=DECIMAL},
                 #{name,jdbcType=VARCHAR},
@@ -17,6 +17,7 @@
                 #{stature,jdbcType=DECIMAL},
                 #{birtAddress,jdbcType=VARCHAR},
                 #{url,jdbcType=VARCHAR},
+                #{coverUrl,jdbcType=VARCHAR},
                 #{beatyTag,jdbcType=VARCHAR},
                 #{collectionId,jdbcType=VARCHAR},
                 #{comment,jdbcType=VARCHAR})

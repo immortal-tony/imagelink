@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Date 2020/12/13 11:32
  */
 @Service
-public class JobLink implements PageProcessor, ApplicationContextAware, Runnable {
+public class JobLink extends TimerTask implements PageProcessor, ApplicationContextAware {
     private static Logger log = LoggerFactory.getLogger(JobLink.class);
 
     private static ApplicationContext applicationContext;
@@ -99,7 +99,7 @@ public class JobLink implements PageProcessor, ApplicationContextAware, Runnable
                             model = new Model();
                             model.setModelId(modelId);
                             model.setName(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[1]/h1/text()").toString());//模特名
-                        model.setCoverUrl(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[3]/a/img/@src").toString());//模特图片
+                            model.setCoverUrl(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[3]/a/img/@src").toString());//模特图片
                             model.setAge(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[1]/td[2]/text()").toString());
                             model.setBirth(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[2]/td[2]/text()").toString());
 //                    String statureStr = StringUtils.isNotBlank(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[4]/td[2]/text()").toString())?page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[4]/td[2]/text()").toString():"0";
@@ -126,7 +126,7 @@ public class JobLink implements PageProcessor, ApplicationContextAware, Runnable
 //                    model.setBirtAddress(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[6]/td[2]/text()").toString());
 //                    model.setBeatyTag(page.getHtml().xpath("//*[@id=\"post\"]/div[2]/div/div[4]/table/tbody/tr[5]/td[2]/text()").toString());
                             // 数据库插入模特信息 , item1 为
-                            model.setUrl(String.format("https://t1.onvshen.com:85/gallery/%s/%s/cover/0.jpg",model.getModelId(), String.valueOf(item1)));
+                            model.setUrl(String.format("https://t1.onvshen.com:85/gallery/%s/%s/cover/0.jpg", model.getModelId(), String.valueOf(item1)));
                             model.setCollectionId(String.valueOf(item1));
                             log.info("模特信息 <{}>", model.toString());
                             modelMapper.insert(model);

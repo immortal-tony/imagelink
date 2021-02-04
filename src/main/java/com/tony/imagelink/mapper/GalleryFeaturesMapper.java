@@ -32,10 +32,11 @@ public interface GalleryFeaturesMapper {
     int insertCollection(@Param("name") Integer collectionId, List<String> featies);
 
     /**
+     * 两张表的搜索拼接查询
      * 查询模特链接表
      * @return
      */
-    List<GalleryFeatures> selectQueryGalleryFeatures();
+    List<GalleryFeatures> selectQueryGalleryFeatures(@Param("collection_id") Integer collection_id,@Param("model_id") Integer model_id);
 
     /**
      * 根据专辑中文名分类，获取模特专辑编号

@@ -37,6 +37,19 @@
         <include refid="Base_Cloumn"></include>
         from
         mmc_gallery_features
+        union
+        select
+        <include refid="Base_Cloumn"></include>
+        from
+        mmc_hot_gallery_features
+        where
+        1 = 1
+        <if test="collection_id != null">
+            and  collection_id = #{collection_id,jdbcType=DECIMAL}
+        </if>
+        <if test="model_id != null">
+            and model_id = #{model_id,jdbcType=DECIMAL}
+        </if>
         group by url
     </select>
     <sql id="Base_Column1">
@@ -91,7 +104,11 @@
         <include refid="Base_Cloumn"></include>
         from
         mmc_gallery_features
-        where collection_id = #{collection_id,jdbcType=INTEGER}
+        where
+        1 = 1
+        <if test="collection_id != null">
+            and  collection_id = #{collection_id,jdbcType=INTEGER}
+        </if>
         group by url
         order by date desc
     </select>
@@ -100,7 +117,11 @@
         <include refid="Base_Cloumn"></include>
         from
         mmc_hot_gallery_features
-        where collection_id = #{collection_id,jdbcType=INTEGER}
+        where
+        1 = 1
+        <if test="collection_id != null">
+            and  collection_id = #{collection_id,jdbcType=INTEGER}
+        </if>
         group by url
         order by pic_num,date desc
     </select>
