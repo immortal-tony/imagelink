@@ -5,9 +5,9 @@
     <insert id="insert" parameterType="com.tony.imagelink.mapper.entity.Model"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into mmc_model
-        (id, name, age, modelId, birth, weight, constellation, stature, birtAddress, url, coverUrl, beatyTag, collectionId,
+        (name, age, modelId, birth, weight, constellation, stature, birtAddress, url, coverUrl, beatyTag, collectionId,
          comment)
-        values (#{id,jdbcType=DECIMAL},
+        values (
                 #{name,jdbcType=VARCHAR},
                 #{age,jdbcType=VARCHAR},
                 #{modelId,jdbcType=DECIMAL},
@@ -28,7 +28,7 @@
     </sql>
     <select id="selectQueryModels" resultType="com.tony.imagelink.mapper.entity.Model">
         select
-        <include refid="Base_clomuns"></include>
+        id,<include refid="Base_clomuns"></include>
         from mmc_model
         where
         <if test="modelId != 0">
@@ -44,7 +44,7 @@
     </sql>
     <select id="slelctHotQueryModels" resultType="com.tony.imagelink.mapper.entity.Model">
         select
-        <include refid="Base_clomuns"></include>
+        id,<include refid="Base_clomuns"></include>
         from mmc_model
         where
         1 = 1

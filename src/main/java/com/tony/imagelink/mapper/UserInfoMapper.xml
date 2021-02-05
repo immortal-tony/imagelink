@@ -18,8 +18,58 @@
         #{membership,jdbcType=VARCHAR})
     </insert>
     <select id="selectUserInfo" resultType="com.tony.imagelink.mapper.entity.UserInfo">
-        select <include refid="table_column"></include>
+        select id,
+        <include refid="table_column"></include>
         from mmc_user_info
-        where name = #{name,jdbcType=VARCHAR}
+        where
+        1 = 1
+        <if test="name != null and name != ''">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="id != null">
+            and name = #{id,jdbcType=INTEGER}
+        </if>
+        order by create_time
+        limit 1
     </select>
+    <select id="checkNameExists" resultType="com.tony.imagelink.mapper.entity.UserInfo">
+        select
+        <include refid="table_column"></include>
+        from mmc_user_info
+        where
+        1 =1
+        <if test="name != null and name != ''">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="id != null">
+            and id = #{id,jdbcType=DECIMAL}
+        </if>
+        order by create_time
+    </select>
+    <update id="updateUserCollections" parameterType="com.tony.imagelink.mapper.entity.UserInfo">
+        update mmc_user_info
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="favorite_models != null and favorite_models != ''">
+                favorite_models = #{favorite_models,jdbcType=VARCHAR},
+            </if>
+            <if test="favorite_collections != null and favorite_collections != ''">
+                favorite_collections = #{favorite_collections,jdbcType=VARCHAR},
+            </if>
+            <if test="favorite_pics != null and favorite_pics != ''">
+                favorite_pics = #{favorite_pics,jdbcType=VARCHAR},
+            </if>
+            <if test="favorite_vides != null and favorite_vides != ''">
+                favorite_vides = #{favorite_vides,jdbcType=VARCHAR},
+            </if>
+            <if test="membership != null and membership != ''">
+                membership = #{membership,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where
+        id = #{id}
+
+    </update>
 </mapper>

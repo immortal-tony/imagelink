@@ -9,7 +9,7 @@ CREATE TABLE `mmc_user_info`
     `favorite_collections`       varchar(900)  DEFAULT NULL COMMENT '收藏模特专辑ids',
     `favorite_pics`       text  DEFAULT NULL COMMENT '收藏的图片',
     `favorite_vides`      text  DEFAULT NULL COMMENT '收藏视频s',
-    `membership`      varchar(100)  DEFAULT NULL COMMENT '会员信息',
+    `membership`      varchar(12)  DEFAULT NULL COMMENT '会员信息',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1

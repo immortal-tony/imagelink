@@ -34,12 +34,12 @@
     </sql>
     <select id="selectQueryGalleryFeatures" resultType="com.tony.imagelink.mapper.entity.GalleryFeatures">
         select
-        <include refid="Base_Cloumn"></include>
+        id,<include refid="Base_Cloumn"></include>
         from
         mmc_gallery_features
         union
         select
-        <include refid="Base_Cloumn"></include>
+        id,<include refid="Base_Cloumn"></include>
         from
         mmc_hot_gallery_features
         where
@@ -101,7 +101,7 @@
     </insert>
     <select id="selectLastQueryGalleryFeatures" resultType="com.tony.imagelink.mapper.entity.GalleryFeatures">
         select
-        <include refid="Base_Cloumn"></include>
+        id,<include refid="Base_Cloumn"></include>
         from
         mmc_gallery_features
         where
@@ -114,7 +114,7 @@
     </select>
     <select id="selectHotQueryGalleryFeatures" resultType="com.tony.imagelink.mapper.entity.GalleryFeatures">
         select
-        <include refid="Base_Cloumn"></include>
+        id,<include refid="Base_Cloumn"></include>
         from
         mmc_hot_gallery_features
         where
