@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="imagelink" />
-        <module name="webmagic-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="analyse" target="1.5" />
       <module name="imagelink" target="1.8" />
       <module name="webmagic-core" target="1.8" />
     </bytecodeTargetLevel>

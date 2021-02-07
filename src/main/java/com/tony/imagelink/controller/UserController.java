@@ -17,6 +17,7 @@ public class UserController {
     // 用户注册修改什么的东西没有完善，还有模特的地址什么的内容修改
     @PostMapping("/registerUser")
     public Object registerUser(@RequestParam("account") String name, @RequestParam("password") String pwd) {
+        log.info("验证用户信息！");
         return null;
     }
 }
