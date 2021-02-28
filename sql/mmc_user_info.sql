@@ -1,4 +1,4 @@
-# 用户表
+# 用户表,信息表
 CREATE TABLE `mmc_user_info`
 (
     `id`            int(12) NOT NULL AUTO_INCREMENT COMMENT '模特的图片id',

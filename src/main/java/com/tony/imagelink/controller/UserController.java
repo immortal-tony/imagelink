@@ -1,8 +1,13 @@
 package com.tony.imagelink.controller;
 
+import com.tony.imagelink.mapper.UserInfoMapper;
+import com.tony.imagelink.ret.BaseReturn;
+import com.tony.imagelink.ret.CommonReturn;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -18,13 +23,35 @@ import java.net.URLDecoder;
 @RequestMapping(value = "user")
 @Slf4j
 public class UserController {
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     // 用户注册修改什么的东西没有完善，还有模特的地址什么的内容修改
     @PostMapping("/registerUser")
-    public Object registerUser(@RequestParam("account") String name, @RequestParam("password") String pwd) {
+    public Object registerUser(@RequestParam("account") String name){
         log.info("验证用户信息！");
+        if(userInfoMapper.checkNameExists(name,null).size()>0){
+            return new CommonReturn(1,"该用户名已存在系统，请修改！");
+        }
+        return new CommonReturn();
+    }
 
-        return null;
+    @PostMapping("/loginUser")
+    public Object loginUser(@RequestParam("account") String name, @RequestParam("password") String pwd) {
+        log.info("用户登录信息验证！");
+        if(userInfoMapper.selectUserInfo(name,null) != null && userInfoMapper.selectUserInfo(name,null).getPassword().equals(pwd)){
+            BaseReturn ret = new BaseReturn(0,userInfoMapper.selectUserInfo(name,null));
+            ret.setMessage("验证成功");
+            return ret;
+        }
+        BaseReturn ret = new BaseReturn(1,"验证成功");
+        return ret;
+    }
+
+    @PostMapping("/searchUserInfo")
+    public Object searchUserInfo(@RequestParam("account") String name) {
+        log.info("用户登录信息验证！");
+        return userInfoMapper.selectUserInfo(name,null);
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {

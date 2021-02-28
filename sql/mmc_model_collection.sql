@@ -1,3 +1,4 @@
+# 模特的图集
 CREATE TABLE myfirst.mmc_model_collection
 (
     id           int(12) primary key auto_increment NOT NULL,

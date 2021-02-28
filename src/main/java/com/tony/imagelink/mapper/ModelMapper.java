@@ -26,5 +26,11 @@ public interface ModelMapper{
      */
     List<Model> slelctHotQueryModels(@Param("modelId") int modelId,@Param("collectionId") String collectionId);
 
+    /**
+     * 模特的图集Id是否存在
+     * @param modelId
+     * @param collectionIds
+     * @return
+     */
     List<Integer> checkModel(@Param("modelId") int modelId,@Param("collectionIds") String collectionIds);
 }
